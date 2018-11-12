@@ -36,27 +36,7 @@
 \usepackage{newtxmath}         %% For math fonts
 
 \moderncvicons{awesome}
-\newcommand{\externallinksymbol}{%
-    \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{% 
-        \begin{scope}[x=1ex, y=1ex]
-            \clip (-0.1,-0.1)
-                --++ (-0, 1.2)
-                --++ (0.6, 0)
-                --++ (0, -0.6)
-                --++ (0.6, 0)
-                --++ (0, -1);
-            \path[draw,
-                line width = 0.5,
-                rounded corners=0.5]
-                (0,0) rectangle (1,1);
-        \end{scope}
-        \path[draw, line width = 0.5] (0.5, 0.5)
-            -- (1, 1);
-        \path[draw, line width = 0.5] (0.6, 1)
-            -- (1, 1) -- (1, 0.6);
-        }
-    }
-
+\newcommand{\externallinksymbol}{{\small\faExternalLink}~}
 
 %-------------------------------------------------------------------------------
 %                package options
@@ -71,6 +51,47 @@
 \moderncvbody{1}
 \moderncvfoot{1}
 
+%% Redefine section and subsection (only for the spacing)
+\RenewDocumentCommand{\section}{sm}{%
+  \par\addvspace{3.5ex}%
+  \phantomsection{}% reset the anchor for hyperrefs
+  \addcontentsline{toc}{section}{#2}%
+  \cvitem[0ex]{\strut\raggedleft\raisebox{\baseletterheight}{\color{color1}\rule{\hintscolumnwidth}{0.95ex}}}{\strut\sectionstyle{#2}}%
+  %\par\nobreak\addvspace{1.5ex}\@afterheading}% to avoid a pagebreak after the heading
+  \par\nobreak\addvspace{1.5ex}\@afterheading}% to avoid a pagebreak after the heading
+
+\RenewDocumentCommand{\subsection}{sm}{%
+  \par\addvspace{2ex}%
+  \phantomsection{}% reset the anchor for hyperrefs
+  \addcontentsline{toc}{subsection}{#2}%
+  \cvitem[0ex]{}{\strut\subsectionstyle{#2}}%
+  \par\nobreak\addvspace{.5ex}\@afterheading}% to avoid a pagebreak after the heading
+
+%% Redefine the sequence of elements in the footer
+\renewcommand*{\makecvfoot}{%
+  \recomputecvfootlengths{}%
+  \fancypagestyle{plain}{%
+    \fancyfoot[c]{%
+      \parbox[b]{\footwidth}{%
+        \centering%
+        \color{color2}\addressfont%
+        \vspace{\baselineskip}% forces a white line to ensure space between main text and footer (as footer height can't be known in advance)
+        %\addtofoot{\homepagesymbol\emailsymbol\fixedphonesymbol\mobilephonesymbol\linkedinsocialsymbol\twittersocialsymbol\githubsocialsymbol}\flushfoot\@firstfootelementtrue\\[0.25em]%
+        \ifthenelse{\isundefined{\@homepage}}{}{\addtofoot{\homepagesymbol\httplink{\@homepage}}}%
+        \ifthenelse{\isundefined{\@email}}{}{\addtofoot{\emailsymbol\emaillink{\@email}}\flushfoot\@firstfootelementtrue\\[0.25em]}%
+        \collectionloop{phones}{% the key holds the phone type (=symbol command prefix), the item holds the number
+          \addtofoot{\csname\collectionloopkey phonesymbol\endcsname\collectionloopitem}}\flushfoot\@firstfootelementtrue\\[0.25em]%
+        \collectionloop{socials}{% the key holds the social type (=symbol command prefix), the item holds the link
+          \addtofoot{\csname\collectionloopkey socialsymbol\endcsname\collectionloopitem}}\flushfoot\@firstfootelementtrue\\[0.25em]%
+        \ifthenelse{\isundefined{\@addressstreet}}{}{\addtofoot[]{\addresssymbol\@addressstreet}%
+          \ifthenelse{\equal{\@addresscity}{}}{}{\addtofoot[,~]{\@addresscity}}% if \addresstreet is defined, \addresscity and \addresscountry will always be defined but could be empty
+          \ifthenelse{\equal{\@addresscountry}{}}{}{\addtofoot[,~]{\@addresscountry}}%
+          \flushfoot\@firstfootelementtrue\\}%
+        \ifthenelse{\isundefined{\@extrainfo}}{}{\addtofoot{\@extrainfo}}%
+        \ifthenelse{\lengthtest{\footboxwidth=0pt}}{}{\flushfoot}% the lengthtest is required to avoid flushing an empty footer, which could cause a blank line due to the \\ after the address, if no other personal info is used
+        }}}%
+  \pagestyle{plain}}
+
 %-------------------------------------------------------------------------------
 %                style definition
 %-------------------------------------------------------------------------------
@@ -78,38 +99,9 @@
 \newcommand*{\linkstyle}[1]{{\textcolor{color1}{#1}}}
 \newcommand*{\authorstyle}[1]{{\scshape\textcolor{color2}{#1}}}
 
-% lengths
-%\newlength{\quotewidth}
-%\newlength{\hintscolumnwidth}
-%\setlength{\hintscolumnwidth}{0.185\textwidth}
-%\newlength{\separatorcolumnwidth}
-%\setlength{\separatorcolumnwidth}{0.025\textwidth}
-%\newlength{\maincolumnwidth}
-%\newlength{\doubleitemmaincolumnwidth}
-%\newlength{\listitemsymbolwidth}
-%\settowidth{\listitemsymbolwidth}{\listitemsymbol}
-%\newlength{\listitemmaincolumnwidth}
-%\newlength{\listdoubleitemmaincolumnwidth}
-%
-%% commands
-%\renewcommand*{\recomputecvlengths}{%
-%  \setlength{\quotewidth}{0.65\textwidth}%
-%  % main lenghts
-%  \setlength{\maincolumnwidth}{\textwidth-\separatorcolumnwidth-\hintscolumnwidth}%
-%  % listitem lengths
-%  \setlength{\listitemmaincolumnwidth}{\maincolumnwidth-\listitemsymbolwidth}%
-%  % doubleitem lengths
-%  \setlength{\doubleitemmaincolumnwidth}{\maincolumnwidth-\hintscolumnwidth-\separatorcolumnwidth-\separatorcolumnwidth}%
-%  \setlength{\doubleitemmaincolumnwidth}{0.5\doubleitemmaincolumnwidth}%
-%  % listdoubleitem lengths
-%  \setlength{\listdoubleitemmaincolumnwidth}{\maincolumnwidth-\listitemsymbolwidth-\separatorcolumnwidth-\listitemsymbolwidth}%
-%  \setlength{\listdoubleitemmaincolumnwidth}{0.5\listdoubleitemmaincolumnwidth}%
-%  % fancyhdr lengths
-%  \renewcommand{\headwidth}{\textwidth}%
-%  % regular lengths
-%  \setlength{\parskip}{0\p@}%
-%}
-
+\renewcommand*{\namefont}{\fontfamily{ClearSans-LF}\selectfont\Huge}
+\renewcommand*{\sectionfont}{\fontfamily{ClearSans-LF}\selectfont\Large\upshape}
+\renewcommand*{\subsectionfont}{\fontfamily{ClearSans-LF}\selectfont\large\upshape}
 
 \renewcommand*{\cventry}[7][.5em]{%
   \cvitem[#1]{#2}{%
@@ -119,54 +111,35 @@
     \ifthenelse{\equal{#6}{}}{}{, #6}%
     .\strut%
     \ifx&#7&%
-      \else{\newline{}\begin{minipage}[t]{\linewidth}\textcolor{color2}{#7}\end{minipage}}\fi}
+      \else{\newline{}\begin{minipage}[t]{\linewidth}\textcolor{color2}{\small#7}\end{minipage}}\fi}
    }
 
-%\renewcommand*{\cvlistitem}[2][.5em]{%
-%  \cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listitemmaincolumnwidth}\textcolor{color2}{#2}\end{minipage}}\vspace{0.15em}
-% \par\addvspace{#1}
-%}
+\renewcommand*{\cvlistitem}[2][.5em]{%
+  \cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listitemcolumnwidth}#2\end{minipage}}}
 
-%\renewcommand*{\cvlistitem}[3][.5em]{%
-%  \cvitem[#3]{#3}
-%             {\listitemsymbol\begin{minipage}[t]\textcolor{color2}{#3}\end{minipage}}
-%  }
+\newcommand*{\cvreferee}[6][1em]{%
+  \cvitem[#1]{}{
+    \listitemsymbol\begin{minipage}[t]{\listitemcolumnwidth}
+    {\bfseries#2}, %
+    {\slshape#3}, %
+    {#4}, %
+    {#5}.%
+    \newline{}\color{color1}\emailsymbol\slshape\emaillink{#6}%
+    \end{minipage}%
+    }%
+  }
 
-%\newcommand*{\mycvlistitem}[3][.5em]{%
-%  \cvitem[#1]{}
-%  {\listitemsymbol~\bfseries#2}
-%  \ifx&#3&%
-%    \else{\newline{}\begin{minipage}[t]{\listitemcolumnwidth}{#2}\end{minipage}}
-%  }
-
-\newcommand*{\mycvlistitem}[4][.5em]{%
+\newcommand*{\cvmidsep}[4][.5em]{%
   \cvitem[#1]{#2}
-             {#3 $\mid$ \textcolor{color2}{#4}}
+             {#3 $\mid$ \textcolor{color2}{\small #4}}
   }
 
 \newcommand*{\pubitem}[6][.5em]{%
   \cvitem[#1]{#2}
              {#3%
               \newline{}\authorstyle{#4}%
-              \newline{}\href{#6}{{\large\linkstyle\externallinksymbol}~\textcolor{color2}{\small{#5}}}
+              \newline{}\href{#6}{{\linkstyle\externallinksymbol}\textcolor{color2}{\small{#5}}}
              }
   }
 
-% \newlength{\pubcolumn}
-% \newcommand*{\pubitem}[6][.5em]{%
-%   \setlength{\pubcolumn}{\maincolumnwidth - \separatorcolumnwidth - 10pt}
-%   \begin{tabular}
-%     {@{}p{\hintscolumnwidth}@{\hspace{\separatorcolumnwidth}}p{\maincolumnwidth}@{}}%
-%     \raggedleft\hintstyle{#2}&
-%     {#3}\\&%
-%     \authorstyle{#4}\\&% 
-%     \href{#6}{{\large\linkstyle\externallinksymbol}~\textcolor{color2}{\small{#5}}}\\&%
-%   \end{tabular}%
-%   \par%\addvspace{#1}
-%   }
-
-
 \endinput
-
-
-%% end of file `moderncvstyleempty.sty'.
