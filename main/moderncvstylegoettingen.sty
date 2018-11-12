@@ -123,9 +123,9 @@
       \if@right\raggedleft\fi%
       \namefont%
       \if@alternate% alternate design: first- and lastname in lowercase with no space in between (distinction is made by color difference)
-        {\color{color2!70}\MakeLowercase\@firstname}{\color{color0!70}\MakeLowercase\@lastname}%
+        {\color{color2!70}\MakeLowercase\@firstname}{\color{color2}\MakeLowercase\@lastname}%
       \else% default design: first- and lastname as given with a space in between
-        {\textls[-20]{\color{color2!70}\@firstname}} {\textls[-20]{\color{color0!70}\@lastname}}\fi}}%
+        {\textls[-20]{\color{color2!70}\@firstname}} {\textls[-20]{\color{color2}\@lastname}}\fi}}%
   % rendering
   \if@left%
     \usebox{\makecvheadnamebox}%
