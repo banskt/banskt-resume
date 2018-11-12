@@ -36,7 +36,6 @@
 \usepackage{newtxmath}         %% For math fonts
 
 \moderncvicons{awesome}
-\newcommand{\externallinksymbol}{{\small\faExternalLink}~}
 
 %-------------------------------------------------------------------------------
 %                package options
@@ -50,6 +49,10 @@
 \moderncvhead[\moderncvstyleheadoptions]{2}
 \moderncvbody{1}
 \moderncvfoot{1}
+
+%% Add page numbers
+\usepackage{lastpage}
+\fancyfoot[r]{\parbox[b]{20pt}{\color{color2}\pagenumberfont\strut\thepage/\pageref{LastPage}}}
 
 %% Redefine section and subsection (only for the spacing)
 \RenewDocumentCommand{\section}{sm}{%
@@ -76,13 +79,15 @@
         \centering%
         \color{color2}\addressfont%
         \vspace{\baselineskip}% forces a white line to ensure space between main text and footer (as footer height can't be known in advance)
+        %{\bfseries\addtofoot[]{\@firstname}\addtofoot[~]{\@lastname}\flushfoot\@firstfooterelementtrue\\[.25em]}
+        \addtofoot{\bfseries\@firstname~\@lastname}\flushfoot\@firstfootelementtrue\\[0.25em]
         %\addtofoot{\homepagesymbol\emailsymbol\fixedphonesymbol\mobilephonesymbol\linkedinsocialsymbol\twittersocialsymbol\githubsocialsymbol}\flushfoot\@firstfootelementtrue\\[0.25em]%
         \ifthenelse{\isundefined{\@homepage}}{}{\addtofoot{\homepagesymbol\httplink{\@homepage}}}%
-        \ifthenelse{\isundefined{\@email}}{}{\addtofoot{\emailsymbol\emaillink{\@email}}\flushfoot\@firstfootelementtrue\\[0.25em]}%
+        \ifthenelse{\isundefined{\@email}}{}{\addtofoot{\emailsymbol\emaillink{\@email}}\flushfoot\@firstfootelementtrue\\[0.3em]}%
         \collectionloop{phones}{% the key holds the phone type (=symbol command prefix), the item holds the number
-          \addtofoot{\csname\collectionloopkey phonesymbol\endcsname\collectionloopitem}}\flushfoot\@firstfootelementtrue\\[0.25em]%
+          \addtofoot{\csname\collectionloopkey phonesymbol\endcsname\collectionloopitem}}%\flushfoot\@firstfootelementtrue\\[0.25em]%
         \collectionloop{socials}{% the key holds the social type (=symbol command prefix), the item holds the link
-          \addtofoot{\csname\collectionloopkey socialsymbol\endcsname\collectionloopitem}}\flushfoot\@firstfootelementtrue\\[0.25em]%
+          \addtofoot{\csname\collectionloopkey socialsymbol\endcsname\collectionloopitem}}\flushfoot\@firstfootelementtrue%
         \ifthenelse{\isundefined{\@addressstreet}}{}{\addtofoot[]{\addresssymbol\@addressstreet}%
           \ifthenelse{\equal{\@addresscity}{}}{}{\addtofoot[,~]{\@addresscity}}% if \addresstreet is defined, \addresscity and \addresscountry will always be defined but could be empty
           \ifthenelse{\equal{\@addresscountry}{}}{}{\addtofoot[,~]{\@addresscountry}}%
@@ -92,6 +97,89 @@
         }}}%
   \pagestyle{plain}}
 
+%% Add keywords
+\newcommand{\keywords}[1]{\def\@keywords{#1}}
+\newcommand*{\symbolstyle}[1]{{\small\textcolor{color2!30}{#1}}}
+\renewcommand*{\makecvhead}{% TODO: use \@initializecommand, which requires modifying its definition to handle \par
+  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+  \recomputecvlengths%
+  % optional picture (pre-rendering)
+  \@initializebox{\makecvheadpicturebox}%
+  \savebox{\makecvheadpicturebox}{%
+    \ifthenelse{\isundefined{\@photo}}%
+      {}%
+      {%
+       \setlength\fboxrule{\@photoframewidth}%
+       \ifdim\@photoframewidth=0pt%
+         \setlength{\fboxsep}{0pt}\fi%
+       {\color{color1}\framebox{\includegraphics[width=\@photowidth]{\@photo}}}}}%
+  % name (pre-rendering)
+  \@initializelength{\makecvheadpicturewidth}%
+  \settowidth{\makecvheadpicturewidth}{\usebox{\makecvheadpicturebox}}%
+  \@initializebox{\makecvheadnamebox}%
+  \savebox{\makecvheadnamebox}{%
+    \parbox[b]{\textwidth-\makecvheadpicturewidth}{%
+      \if@left\raggedright\fi%
+      \if@right\raggedleft\fi%
+      \namefont%
+      \if@alternate% alternate design: first- and lastname in lowercase with no space in between (distinction is made by color difference)
+        {\color{color2!70}\MakeLowercase\@firstname}{\color{color0!70}\MakeLowercase\@lastname}%
+      \else% default design: first- and lastname as given with a space in between
+        {\textls[-20]{\color{color2!70}\@firstname}} {\textls[-20]{\color{color0!70}\@lastname}}\fi}}%
+  % rendering
+  \if@left%
+    \usebox{\makecvheadnamebox}%
+    \usebox{\makecvheadpicturebox}\fi
+  \if@right%
+    \usebox{\makecvheadpicturebox}%
+    \usebox{\makecvheadnamebox}\fi\\[-.35em]%
+  {\color{color2!50}\rule{\textwidth}{.25ex}}%
+  % optional detailed information
+  \if@details{%
+    \\\null%
+    \addressfont\color{color2}%
+    \ifthenelse{\isundefined{\@addressstreet}}{}{\addtomakeheaddetails{\addresssymbol\@addressstreet}%
+      \ifthenelse{\equal{\@addresscity}{}}{}{\addtomakeheaddetails[~--~]{\@addresscity}}% if \addresstreet is defined, \addresscity and \addresscountry will always be defined but could be empty
+      \ifthenelse{\equal{\@addresscountry}{}}{}{\addtomakeheaddetails[~--~]{\@addresscountry}}%
+        \flushmakeheaddetails\@firstmakeheaddetailselementtrue\\\null}%
+    \collectionloop{phones}{% the key holds the phone type (=symbol command prefix), the item holds the number
+      \addtomakeheaddetails{\csname\collectionloopkey phonesymbol\endcsname\collectionloopitem}}%
+    \ifthenelse{\isundefined{\@email}}{}{\addtomakeheaddetails{\emailsymbol\emaillink{\@email}}}%
+    \ifthenelse{\isundefined{\@homepage}}{}{\addtomakeheaddetails{\homepagesymbol\httplink{\@homepage}}}%
+    \collectionloop{socials}{% the key holds the social type (=symbol command prefix), the item holds the link
+      \addtomakeheaddetails{\csname\collectionloopkey socialsymbol\endcsname\collectionloopitem}}%
+    \ifthenelse{\isundefined{\@extrainfo}}{}{\addtomakeheaddetails{\@extrainfo}}%
+    \flushmakeheaddetails}\fi% need to force a \par after this to avoid weird spacing bug at the first section if no blank line is left after \makehead
+  % optional title
+  \ifthenelse{\equal{\@title}{}}{}{%
+    \\[.5em]\null% \null is required as there is no box on the line after \\, so glue such as \hfill (and leaders) disappear; this is in contrast to after \par, where the next line starts with an indent box (even after \noindent)
+    %\if@right\hfill\fi%
+    \if@alternate%
+      \titlestyle{\symbolstyle\bookmarksymbol\MakeLowercase\@title}%
+    \else%
+      \titlestyle{\symbolstyle\bookmarksymbol\@title}\fi%
+    }\\%[2.5em]%
+  % optional keywords
+  \ifthenelse{\equal{\@keywords}{}}{}{%
+    %\\[0em]\null% \null is required as there is no box on the line after \\, so glue such as \hfill (and leaders) disappear; this is in contrast to after \par, where the next line starts with an indent box (even after \noindent)
+    %\if@right\hfill\fi%
+    \if@alternate%
+      \titlestyle{\symbolstyle\bookmarksymbol\MakeLowercase\@keywords}%
+    \else%
+      \titlestyle{\symbolstyle\bookmarksymbol\@keywords}\fi%
+    }\\%[2.5em]%
+  % optional quote
+  \ifthenelse{\isundefined{\@quote}}%
+    {}%
+    {{\null\hfill%
+      \begin{minipage}{\quotewidth}%
+        \centering%
+        \quotestyle{\@quote}%
+      \end{minipage}\hfill\null\\%[2.5em]
+    }}%
+  \par}% to avoid weird spacing bug at the first section if no blank line is left after \maketitle
+
+
 %-------------------------------------------------------------------------------
 %                style definition
 %-------------------------------------------------------------------------------
@@ -99,9 +187,10 @@
 \newcommand*{\linkstyle}[1]{{\textcolor{color1}{#1}}}
 \newcommand*{\authorstyle}[1]{{\scshape\textcolor{color2}{#1}}}
 
-\renewcommand*{\namefont}{\fontfamily{ClearSans-LF}\selectfont\Huge}
+\renewcommand*{\namefont}{\fontfamily{ClearSans-LF}\selectfont\fontsize{30}{40}\selectfont}
 \renewcommand*{\sectionfont}{\fontfamily{ClearSans-LF}\selectfont\Large\upshape}
 \renewcommand*{\subsectionfont}{\fontfamily{ClearSans-LF}\selectfont\large\upshape}
+\renewcommand*{\titlestyle}[1]{{\normalsize\textcolor{color2}{#1}}}
 
 \renewcommand*{\cventry}[7][.5em]{%
   \cvitem[#1]{#2}{%
@@ -138,7 +227,7 @@
   \cvitem[#1]{#2}
              {#3%
               \newline{}\authorstyle{#4}%
-              \newline{}\href{#6}{{\linkstyle\externallinksymbol}\textcolor{color2}{\small{#5}}}
+              \newline{}\href{#6}{{\linkstyle{\footnotesize\externallinksymbol}}\textcolor{color2}{\small{#5}}}
              }
   }
 
