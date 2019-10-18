@@ -409,8 +409,8 @@
 \newcommand{\acvHeaderPersonalSep}{\quad\textbar\quad}
 \newcommand{\acvHeaderAfterSocialSkip}{1mm}
 \newcommand{\acvHeaderAfterPersonalSkip}{1mm}
-\newcommand{\acVHeaderAfterGScholarSkip}{1mm}
-\newcommand{\acvHeaderAfterQuoteSkip}{-4mm}
+\newcommand{\acVHeaderAfterGScholarSkip}{2mm}
+\newcommand{\acvHeaderAfterQuoteSkip}{5mm}
 
 % Others
 \newcommand{\acvSectionTopSkip}{3mm}
@@ -574,13 +574,13 @@
          }%
        \vspace{\acVHeaderAfterGScholarSkip}%
       }
+    \ifthenelse{\isundefined{\@quote}}%
+      {}%
+      {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
   \end{minipage}%
   \begin{minipage}[c]{\headerphotowidth}%
     \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
   \end{minipage}
-  \ifthenelse{\isundefined{\@quote}}%
-    {}%
-    {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
 }
 
 % Define a footer for CV
@@ -673,17 +673,6 @@
           \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
       }
     \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
-  \end{tabular*}%
-}
-
-% Define an entry of education
-% Usage: \eduentry{<degree>}{<institute>}{<note>}{<date>}
-\newcommand*{\eduentry}[5]{%
-  \vspace{-2.0mm}
-  \setlength\tabcolsep{0pt}
-  \setlength{\extrarowheight}{0pt}
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 2.5cm} R{2.5cm}}
-    \entrytitlestyle{#2.} \descriptionstyle{#5} & \entrydatestyle{#3} \\
   \end{tabular*}%
 }
 
