@@ -682,7 +682,7 @@
   \vspace{-2.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 2.5cm} R{2.5cm}}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 1.5cm} R{1.5cm}}
     \entrytitlestyle{#2.} \descriptionstyle{#5} & \entrydatestyle{#3} \\
   \end{tabular*}%
 }

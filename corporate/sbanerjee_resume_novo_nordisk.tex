@@ -31,9 +31,7 @@
 \fontdir[fonts/] % Specify the location of the included fonts
 
 % Color for highlights
-% Default colors include: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
-%\colorlet{awesome}{awesome-skyblue}
-\definecolor{awesome}{RGB}{200,99,90}
+\colorlet{awesome}{awesome-skyblue} % Default colors include: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
 %\definecolor{awesome}{HTML}{CA63A8} % Uncomment if you would like to specify your own color
 
 % Colors for text - uncomment and modify
@@ -53,28 +51,28 @@
 %----------------------------------------------------------------------------------------
 
 \name{Saikat}{Banerjee}
-\address{T4/103, Max Planck Institute for Biophysical Chemistry,\\Am Fa{\ss}berg 11, G\"ottingen 37077, Germany}
+\address{T4/103, Am Fa{\ss}berg 11, G\"ottingen 37077, Germany}
 \mobile{(+49) 17621103442}
+
 \email{saikat.banerjee@mpibpc.mpg.de}
 \homepage{saik.at}
 \github{banskt}
 \linkedin{banskt}
 \dob{8 Sep. 1985}
 \nationality{Indian}
-\gscholar{Olrxt2IAAAAJ}
-%\skype{banskt}
+%\skype{skypeid}
 %\stackoverflow{SOid}{SOname}
 %\twitter{@twit}
+%\linkedin{linkedin name}
 %\reddit{reddit account}
 %\xing{xing name}
 %\extrainfo{test} % Other text you want to include on this line
-\photo[circle,edge,right]{3.4cm}{../images/sbanerjee_resume_2019_03_640x640.jpg}
+\photo[rectangle,edge,right]{3.2cm}{../images/sbanerjee_resume_2019_02_640x640.jpg}
 
 \position{Statistical Genetics{\enskip\cdotp\enskip}Bayesian Methods{\enskip\cdotp\enskip}Systems Medicine{\enskip\cdotp\enskip}Data Science} % Your expertise/fields
-% \quote{I solve problems, often learning new skills along the way. I write equations, develop software and lead projects.} % A quote or statement
+\quote{Scientist / ex-entrepreneur / graphic designer. I write equations, develop software and lead projects to understand biomedical data. I solve problems, often learning new skills at a professional level.}
 
-% Specify the letter footer with 3 arguments: (<left>, <center>, <right>), leave any of these blank if they are not needed
-\makecvfooter{\today}{}{\thepage/\pageref{LastPage}} 
+\makecvfooter{\today}{S.~Banerjee~~~·~~~Résumé}{\thepage/\pageref{LastPage}} % Specify the letter footer with 3 arguments: (<left>, <center>, <right>), leave any of these blank if they are not needed
 
 %----------------------------------------------------------------------------------------
 
@@ -87,23 +85,17 @@
 %	Each section is imported separately, open each file in turn to modify content
 %----------------------------------------------------------------------------------------
 
-\input{cv-sections/experience.tex}
-\input{cv-sections/education.tex}
-\input{cv-sections/software.tex}
-% 
-\newpage % Force a new page for looks
-% 
-\input{cv-sections/publications.tex}
-\input{cv-sections/presentation.tex}
-%
-\newpage % Force a new page for looks
-% 
+\input{cv-sections/nordisk-experience.tex}
+\input{cv-sections/nordisk-education.tex}
 \input{cv-sections/skills.tex}
+
+\newpage % Force a new page for looks
+
+\input{cv-sections/software.tex}
+\input{cv-sections/nordisk-publications.tex}
+\input{cv-sections/presentation.tex}
 \input{cv-sections/honors.tex}
-\input{cv-sections/supervision.tex}
 \input{cv-sections/extracurricular.tex}
-\input{cv-sections/referee.tex}
-%\input{cv-sections/hobbies.tex}
 %\input{cv-sections/writing.tex}
 %\input{cv-sections/committees.tex}
 

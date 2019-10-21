@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Awesome Cover Letter
+% XeLaTeX Template
+% Version 1.1 (9/1/2016)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original authors:
+% Claud D. Park (posquit0.bj@gmail.com)
+% Lars Richter (mail@ayeks.de)
+% With modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template must be compiled with XeLaTeX, the below lines will ensure this
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt, a4paper]{awesome-cv} % A4 paper size by default, use 'letterpaper' for US letter
+
+\geometry{left=2cm, top=1.5cm, right=2cm, bottom=2cm, footskip=.5cm} % Configure page margins with geometry
+ 
+\fontdir[fonts/] % Specify the location of the included fonts
+
+% Color for highlights
+\colorlet{awesome}{awesome-skyblue} % Default colors include: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
+%\definecolor{awesome}{HTML}{CA63A8} % Uncomment if you would like to specify your own color
+
+% Colors for text - uncomment and modify
+%\definecolor{darktext}{HTML}{414141}
+%\definecolor{text}{HTML}{414141}
+%\definecolor{graytext}{HTML}{414141}
+%\definecolor{lighttext}{HTML}{414141}
+
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad} % If you would like to change the social information separator from a pipe (|) to something else
+
+%----------------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%	Comment any of the lines below if they are not required
+%----------------------------------------------------------------------------------------
+
+\name{Saikat}{Banerjee}
+\address{T4/103, Am Fa{\ss}berg 11, G\"ottingen 37077, Germany}
+\mobile{(+49) 17621103442}
+
+\email{saikat.banerjee@mpibpc.mpg.de}
+\homepage{saik.at}
+\github{banskt}
+\linkedin{banskt}
+
+%\skype{skypeid}
+%\stackoverflow{SOid}{SOname}
+%\twitter{@twit}
+
+\position{Statistical Genetics{\enskip\cdotp\enskip}Bayesian Methods{\enskip\cdotp\enskip}Systems Medicine{\enskip\cdotp\enskip}Data Science} % Your expertise/fields
+\quote{After years of developing methods to understand biomedical data in academic environment, I want to get closer to the clinical application.} % A quote or statement
+
+%----------------------------------------------------------------------------------------
+%	RECIPIENT/POSITION/LETTER INFORMATION
+%	All of the below lines must be filled out
+%----------------------------------------------------------------------------------------
+
+\recipient{Department of Bioinformatics and Data Mining}{Novo Nordisk\\M\r{a}l{\o}v\\Denmark} % The company being applied to
+
+\letterdate{\today} % The date on the letter, default is the date of compilation
+
+\lettertitle{Job Application for Computation Biologist} % The title of the letter
+
+\letteropening{Dear Dr. Martijn van de Bunt,} % How the letter is opened
+
+\letterclosing{Sincerely,} % How the letter is closed
+
+\letterenclosure[Attached]{R{\'e}sum{\'e}} % Any enclosures with the letter
+
+\makecvfooter{\today}{}{} % Specify the letter footer with 3 arguments: (<left>, <center>, <right>), leave any of these blank if they are not needed
+  
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\makecvheader % Print the header
+
+\makelettertitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	LETTER CONTENT
+%----------------------------------------------------------------------------------------
+
+\begin{cvletter}
+
+%------------------------------------------------
+
+\lettersection{About Me}
+
+I am Saikat Banerjee, currently a postdoctoral fellow at the Max Planck Institute for Biophysical Chemistry in Germany,
+working on developing statistical methods for integrating and analyzing GWAS and eQTL data.
+I have a PhD in computational biophysics and Masters in chemistry. 
+I once co-founded a marketing management company.
+
+%------------------------------------------------
+
+\lettersection{Why Novo Nordisk?}
+
+I came to know about your department from the career session at ISMB 2019, Basel and was impressed by the motivation and engagement of your team.
+Novo Nordisk is a global leader in executing clinical trials for diabetes and other chronic diseases,
+and hence provides the perfect platform to see my work leading to clinical impact.
+I think there is an agile and open innovation setup at the company with opportunities for personal and professional development as well as an excellent work-life balance.
+
+%------------------------------------------------
+
+\lettersection{Why Me?}
+
+I believe my experience and technical skills, as discussed in the attached r{\'e}sum{\'e}, would be a valuable addition to your bioinformatics team. 
+More importantly, I will bring my motivation and energy to do something which I am really, really passionate about.
+I have succesfully led multiple projects during my postdoc and PhD, collaborated with international scientists 
+and communicated my findings with medical doctors.
+
+%------------------------------------------------
+
+\end{cvletter}
+
+%----------------------------------------------------------------------------------------
+
+\makeletterclosing % Print the signature and enclosures
+
+\end{document}
